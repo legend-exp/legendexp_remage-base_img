@@ -1,0 +1,58 @@
+FROM ubuntu:20.10
+
+LABEL maintainer.name="Luigi Pertoldi"
+LABEL maintainer.email="gipert@pm.me"
+
+ARG GEANT4_VERSION="10.07"
+
+USER root
+WORKDIR /root
+
+# configure system
+COPY packages packages
+RUN apt-get update -qq && \
+    apt-get -y install $(cat packages) && \
+    rm -rf /var/lib/apt/lists/*
+
+# build and install GEANT4
+RUN mkdir -p src build /opt/geant4 && \
+    wget -q -O- "https://geant4-data.web.cern.ch/releases/geant4.${GEANT4_VERSION}.tar.gz" \
+        | tar --strip-components 1 -C src --strip=1 -x -z && \
+    cd build && \
+    cmake \
+        -DCMAKE_INSTALL_PREFIX="/opt/geant4" \
+        --fail-on-missing \
+        --enable-shared \
+        --enable-soversion \
+        # -DGEANT4_BUILD_CXXSTD=11 \
+        -DGEANT4_USE_GDML=ON \
+        -DGEANT4_INSTALL_DATA=ON \
+        -DGEANT4_INSTALL_DATASETS_TENDL=ON \
+        -DGEANT4_USE_SYSTEM_EXPAT=ON \
+        -DGEANT4_USE_SYSTEM_ZLIB=ON \
+# better to use the suggested, validated CLHEP
+        -DGEANT4_USE_SYSTEM_CLHEP=OFF \
+        -DGEANT4_BUILD_MULTITHREADED=ON \
+# must be compiled in thread-safe mode, if GEANT4 multithreading is enabled
+        ../src && \
+    make -j"$(nproc)" install && \
+    rm -rf src build
+
+# there's no alternative to setting env vars explicitly
+ENV PATH="/opt/geant4/bin:$PATH" \
+    LD_LIBRARY_PATH="/opt/geant4/lib64:$LD_LIBRARY_PATH" \
+    G4ABLADATA="/opt/geant4/share/Geant4-10.7.0/data/G4ABLA3.1" \
+    G4ENSDFSTATEDATA="/opt/geant4/share/Geant4-10.7.0/data/G4ENSDFSTATE2.3" \
+    G4INCLDATA="/opt/geant4/share/Geant4-10.7.0/data/G4INCL1.0" \
+    G4LEDATA="/opt/geant4/share/Geant4-10.7.0/data/G4EMLOW7.13" \
+    G4LEVELGAMMADATA="/opt/geant4/share/Geant4-10.7.0/data/PhotonEvaporation5.7" \
+    G4NEUTRONHPDATA="/opt/geant4/share/Geant4-10.7.0/data/G4NDL4.6" \
+    G4PARTICLEXSDATA="/opt/geant4/share/Geant4-10.7.0/data/G4PARTICLEXS3.1" \
+    G4PIIDATA="/opt/geant4/share/Geant4-10.7.0/data/G4PII1.3" \
+    G4RADIOACTIVEDATA="/opt/geant4/share/Geant4-10.7.0/data/RadioactiveDecay5.6" \
+    G4REALSURFACEDATA="/opt/geant4/share/Geant4-10.7.0/data/RealSurface2.2" \
+    G4SAIDXSDATA="/opt/geant4/share/Geant4-10.7.0/data/G4SAIDDATA2.0" \
+    G4TENDLDATA="/opt/geant4/share/Geant4-10.7.0/data/G4TENDL1.3.2" \
+    AllowForHeavyElements=1
+
+CMD /bin/bash
