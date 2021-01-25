@@ -70,7 +70,7 @@ RUN mkdir -p src build /opt/geant4 && \
 
 # there's no alternative to setting env vars explicitly
 ENV PATH="/opt/geant4/bin:$PATH" \
-    LD_LIBRARY_PATH="/opt/geant4/lib64:$LD_LIBRARY_PATH" \
+    LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH" \
     G4ABLADATA="/opt/geant4/share/Geant4-10.6.3/data/G4ABLA3.1" \
     G4ENSDFSTATEDATA="/opt/geant4/share/Geant4-10.6.3/data/G4ENSDFSTATE2.2" \
     G4INCLDATA="/opt/geant4/share/Geant4-10.6.3/data/G4INCL1.0" \
