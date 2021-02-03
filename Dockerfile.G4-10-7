@@ -65,6 +65,11 @@ RUN mkdir -p src build /opt/geant4 && \
 # must be compiled in thread-safe mode, if GEANT4 multithreading is enabled
         -DGEANT4_USE_HDF5=ON \
         -DGEANT4_USE_USOLIDS=ON \
+        -DGEANT4_USE_QT=ON \
+        -DGEANT4_USE_INVENTOR_QT=ON \
+        -DGEANT4_USE_XM=ON \
+        -DGEANT4_USE_OPENGL_X11=ON \
+        -DGEANT4_USE_RAYTRACER_X11=ON \
         ../src && \
     make -j"$(nproc)" install && \
     rm -rf src build

@@ -3,6 +3,7 @@ cmake
 ca-certificates
 curl
 doxygen
+freeglut3-dev
 g++
 gcc
 git-lfs
@@ -10,9 +11,15 @@ graphviz
 libexpat1-dev
 libhdf5-dev
 libgsl-dev
+libmotif-dev
+libopengl-dev
+libsoqt520-dev
 libxerces-c-dev
+libxi-dev
+libxmu-dev
 locales
 make
+qt5-default
 vim
 wget
 zlib1g-dev
