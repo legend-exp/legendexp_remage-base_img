@@ -15,7 +15,9 @@ WORKDIR /root
 COPY packages packages
 RUN apt-get update -qq && \
     apt-get -y install $(cat packages) && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+# https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
+    strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
 # install ROOT
 RUN mkdir -p /opt/root && \
