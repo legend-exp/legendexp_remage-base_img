@@ -1,0 +1,5 @@
+_deprecated
+Dockerfile.*
+.DS_Store
+*.sif
+README.md
