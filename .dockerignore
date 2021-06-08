@@ -1,3 +1,4 @@
+build.sh
 _deprecated
 Dockerfile.*
 .DS_Store
