@@ -7,6 +7,7 @@ ARG ROOT_VERSION="6.24.00"
 ARG VECGEOM_VERSION="1.1.8"
 ARG GEANT4_VERSION="10.07"
 ARG BXDECAY0_VERSION="1.0.10"
+ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
 WORKDIR /root
@@ -16,9 +17,13 @@ COPY packages packages
 RUN apt-get update -qq && \
     ln -sf /usr/share/zoneinfo/UTC /etc/localtime && \
     apt-get -y install $(cat packages) && \
+    locale-gen en_US.UTF-8 && update-locale && \
     rm -rf /var/lib/apt/lists/* && \
 # https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
     strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+
+ENV LC_ALL en_US.UTF-8 \
+    LANG en_US.UTF-8
 
 # build and install VecGeom
 RUN mkdir -p src build /opt/vecgeom && \
@@ -27,6 +32,8 @@ RUN mkdir -p src build /opt/vecgeom && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/vecgeom" \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGDML=ON \
         -Dfail-on-missing=ON \
         ../src && \
@@ -45,6 +52,7 @@ RUN mkdir -p src build /opt/root && \
         -DCMAKE_INSTALL_PREFIX="/opt/root" \
 # ROOT is bad software: https://root.cern/install/build_from_source/#caveats
         -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -Dbuiltin_veccore=OFF \
         -Dminimal=ON \
         -Dfail-on-missing=ON \
@@ -74,6 +82,7 @@ RUN mkdir -p src build /opt/geant4 && \
         --enable-shared \
         --enable-soversion \
         -DGEANT4_BUILD_CXXSTD=17 \
+        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGEANT4_USE_GDML=ON \
         -DGEANT4_INSTALL_DATA=ON \
         -DGEANT4_INSTALL_DATASETS_TENDL=ON \
@@ -118,6 +127,8 @@ RUN mkdir -p src build /opt/bxdecay0 && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/bxdecay0" \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DBXDECAY0_WITH_GEANT4_EXTENSION=ON \
         # -DBXDECAY0_INSTALL_DBD_GA_DATA=ON \
         ../src && \

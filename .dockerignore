@@ -1,6 +1,11 @@
 build.sh
+build.log
 _deprecated
 Dockerfile.*
+.gitignore
+.git
 .DS_Store
+*.swp
+*.swo
 *.sif
 README.md
