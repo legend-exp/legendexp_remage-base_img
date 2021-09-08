@@ -6,7 +6,7 @@ LABEL maintainer.email="gipert@pm.me"
 ARG ROOT_VERSION="6.24.00"
 ARG VECGEOM_VERSION="1.1.8"
 ARG GEANT4_VERSION="10.07"
-ARG BXDECAY0_VERSION="1.0.10"
+ARG BXDECAY0_VERSION="1.0.11"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
@@ -22,8 +22,9 @@ RUN apt-get update -qq && \
 # https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
     strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
-ENV LC_ALL en_US.UTF-8 \
-    LANG en_US.UTF-8
+ENV LC_ALL="en_US.utf8" \
+    LANGUAGE="en_US.utf8" \
+    LANG="en_US.utf8"
 
 # build and install VecGeom
 RUN mkdir -p src build /opt/vecgeom && \

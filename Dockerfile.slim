@@ -19,8 +19,9 @@ RUN apt-get update -qq && \
 # https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
     strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
-ENV LC_ALL en_US.UTF-8 \
-    LANG en_US.UTF-8
+ENV LC_ALL="en_US.utf8" \
+    LANGUAGE="en_US.utf8" \
+    LANG="en_US.utf8"
 
 # build and install GEANT4
 RUN mkdir -p src build /opt/geant4 && \
