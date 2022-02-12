@@ -1,4 +1,4 @@
-FROM ubuntu:20.10
+FROM ubuntu:focal
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"

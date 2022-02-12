@@ -4,7 +4,6 @@ ca-certificates
 curl
 cython3
 doxygen
-freecad
 freeglut3-dev
 g++
 gcc
