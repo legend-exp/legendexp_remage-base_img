@@ -6,7 +6,7 @@ LABEL maintainer.email="gipert@pm.me"
 ARG ROOT_VERSION="6.24.00"
 ARG VECGEOM_VERSION="1.1.18"
 ARG GEANT4_VERSION="11.0.0"
-ARG BXDECAY0_VERSION="git"
+ARG BXDECAY0_VERSION="1.0.12"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
@@ -72,6 +72,26 @@ ENV ROOTSYS="/opt/root" \
     MANPATH="/opt/root/man:$MANPATH" \
     PYTHONPATH="/opt/root/lib:$PYTHONPATH"
 
+RUN apt-get update -qq && apt-get -y install libqt5webkit5-dev libxcursor-dev
+
+# VTK (G4 and pyg4ometry dependence) from the repos is too old
+# I need to build it since this is the only way to get a vtk-config.cmake
+RUN mkdir -p src build /opt/vtk && \
+    wget -q -O- "https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz" \
+        | tar --strip-components 1 -C src --strip=1 -x -z && \
+    cd build && \
+    cmake \
+        -DVTK_GROUP_ENABLE_Qt=YES \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_INSTALL_PREFIX="/opt/vtk" \
+        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
+        ../src && \
+    make -j"$(nproc)" install && \
+    cd .. && rm -rf src build
+
+ENV PATH="/opt/vtk/bin:$PATH" \
+    LD_LIBRARY_PATH="/opt/vtk/lib:$LD_LIBRARY_PATH"
+
 # build and install GEANT4
 RUN mkdir -p src build /opt/geant4 && \
     wget -q -O- "https://cern.ch/geant4-data/releases/geant4-v${GEANT4_VERSION}.tar.gz" \
@@ -99,6 +119,7 @@ RUN mkdir -p src build /opt/geant4 && \
         -DGEANT4_USE_INVENTOR_QT=ON \
         -DGEANT4_USE_OPENGL_X11=ON \
         -DGEANT4_USE_RAYTRACER_X11=ON \
+        -DGEANT4_USE_VTK=ON \
         ../src && \
     make -j"$(nproc)" install && \
     cd .. && rm -rf src build
@@ -120,12 +141,14 @@ ENV PATH="/opt/geant4/bin:$PATH" \
     G4TENDLDATA="/opt/geant4/share/Geant4-11.0.0/data/G4TENDL1.4" \
     AllowForHeavyElements=1
 
+ARG BXDECAY0_VERSION="git"
+
 RUN mkdir -p src build /opt/bxdecay0 && \
     git lfs install && \
-    if [ "${BXDECAY0_VERSION}" = "git" ]; then \
-        git clone "https://github.com/BxCppDev/bxdecay0" src; \
+    if [[ "${BXDECAY0_VERSION}" == "git" ]]; then \
+        git clone "https://github.com/BxCppDev/bxdecay0" src \
     else \
-        wget -q -O- "https://github.com/BxCppDev/bxdecay0/archive/${BXDECAY0_VERSION}.tar.gz" | tar --strip-components 1 -C src --strip=1 -x -z; \
+        wget -q -O- "https://github.com/BxCppDev/bxdecay0/archive/${BXDECAY0_VERSION}.tar.gz" | tar --strip-components 1 -C src --strip=1 -x -z \
     fi && \
     cd build && \
     cmake \
@@ -140,15 +163,5 @@ RUN mkdir -p src build /opt/bxdecay0 && \
 
 ENV PATH="/opt/bxdecay0/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/bxdecay0/lib:$LD_LIBRARY_PATH"
-
-# python packages
-# note: I will not install freecad for pyg4ometry because it is a mess
-
-RUN pip install numpy pandas uproot4 awkward 'hist[plot]' iminuit hepstats mplhep && /
-    git clone https://bitbucket.org/jairhul/pyg4ometry.git && \
-    cd pyg4ometry && pip install . && \
-    rm -rf pyg4ometry
-
-CMD /bin/bash
 
 # vim: ft=dockerfile
