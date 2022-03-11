@@ -3,9 +3,9 @@ FROM ubuntu:focal
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.24.00"
+ARG ROOT_VERSION="6.26.00"
 ARG VECGEOM_VERSION="1.1.18"
-ARG GEANT4_VERSION="11.0.0"
+ARG GEANT4_VERSION="11.0.1"
 ARG BXDECAY0_VERSION="git"
 ARG CMAKE_BUILD_TYPE="Release"
 
@@ -55,6 +55,7 @@ RUN mkdir -p src build /opt/root && \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -Dbuiltin_veccore=OFF \
+        -Dgdml=ON \
         -Dminimal=ON \
         -Dfail-on-missing=ON \
         ../src && \
@@ -144,7 +145,7 @@ ENV PATH="/opt/bxdecay0/bin:$PATH" \
 # python packages
 # note: I will not install freecad for pyg4ometry because it is a mess
 
-RUN pip install numpy pandas uproot4 awkward 'hist[plot]' iminuit hepstats mplhep && /
+RUN pip install numpy pandas uproot4 awkward 'hist[plot]' iminuit hepstats mplhep && \
     git clone https://bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry && pip install . && \
     rm -rf pyg4ometry
