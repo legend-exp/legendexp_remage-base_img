@@ -8,4 +8,4 @@
 ![License](https://img.shields.io/github/license/gipert/remage-docker)
 
 Docker containers for development of modern GEANT4-based simulations.
-Pre-built images are available on [Docker Hub](https://hub.docker.com/repository/docker/gipert/remage-base).
+Pre-built images are available on [Docker Hub](https://hub.docker.com/r/gipert/remage-base).
