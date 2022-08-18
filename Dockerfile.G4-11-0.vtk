@@ -1,12 +1,12 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.24.00"
+ARG ROOT_VERSION="6.26.06"
 ARG VECGEOM_VERSION="1.1.18"
-ARG GEANT4_VERSION="11.0.0"
-ARG BXDECAY0_VERSION="1.0.12"
+ARG GEANT4_VERSION="11.0.2"
+ARG BXDECAY0_VERSION="1.1.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root

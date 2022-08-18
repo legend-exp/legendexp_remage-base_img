@@ -1,12 +1,12 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.26.00"
+ARG ROOT_VERSION="6.26.06"
 ARG VECGEOM_VERSION="1.1.18"
-ARG GEANT4_VERSION="11.0.1"
-ARG BXDECAY0_VERSION="git"
+ARG GEANT4_VERSION="11.0.2"
+ARG BXDECAY0_VERSION="1.1.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
@@ -80,9 +80,6 @@ RUN mkdir -p src build /opt/geant4 && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/geant4" \
-        --fail-on-missing \
-        --enable-shared \
-        --enable-soversion \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGEANT4_USE_GDML=ON \
@@ -141,14 +138,6 @@ RUN mkdir -p src build /opt/bxdecay0 && \
 
 ENV PATH="/opt/bxdecay0/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/bxdecay0/lib:$LD_LIBRARY_PATH"
-
-# python packages
-# note: I will not install freecad for pyg4ometry because it is a mess
-
-RUN pip install numpy pandas uproot4 awkward 'hist[plot]' iminuit hepstats mplhep && \
-    git clone https://bitbucket.org/jairhul/pyg4ometry.git && \
-    cd pyg4ometry && pip install . && \
-    rm -rf pyg4ometry
 
 CMD /bin/bash
 

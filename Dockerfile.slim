@@ -1,9 +1,9 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG GEANT4_VERSION="11.0.1"
+ARG GEANT4_VERSION="11.0.2"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
@@ -30,9 +30,6 @@ RUN mkdir -p src build /opt/geant4 && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/geant4" \
-        --fail-on-missing \
-        --enable-shared \
-        --enable-soversion \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGEANT4_USE_GDML=ON \
