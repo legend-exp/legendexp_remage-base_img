@@ -3,9 +3,9 @@ FROM ubuntu:jammy
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.26.06"
-ARG VECGEOM_VERSION="1.1.18"
-ARG GEANT4_VERSION="11.0.2"
+ARG ROOT_VERSION="6.26.10"
+ARG VECGEOM_VERSION="1.2.1"
+ARG GEANT4_VERSION="11.0.3"
 ARG BXDECAY0_VERSION="1.1.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
@@ -35,7 +35,8 @@ RUN mkdir -p src build /opt/vecgeom && \
         -DCMAKE_INSTALL_PREFIX="/opt/vecgeom" \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
-        -DGDML=ON \
+        -DVECGEOM_GDML=ON \
+        -DVECGEOM_BUILTIN_VECCORE=ON \
         -Dfail-on-missing=ON \
         ../src && \
     make -j"$(nproc)" install && \
