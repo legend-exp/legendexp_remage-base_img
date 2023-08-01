@@ -3,7 +3,7 @@ FROM ubuntu:jammy
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG GEANT4_VERSION="11.1.0"
+ARG GEANT4_VERSION="11.1.2"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
@@ -47,18 +47,6 @@ RUN mkdir -p src build /opt/geant4 && \
 # there's no alternative to setting env vars explicitly
 ENV PATH="/opt/geant4/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH" \
-    G4ABLADATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4ABLA3.1" \
-    G4ENSDFSTATEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4ENSDFSTATE2.3" \
-    G4INCLDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4INCL1.0" \
-    G4LEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4EMLOW8.2" \
-    G4LEVELGAMMADATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/PhotonEvaporation5.7" \
-    G4NEUTRONHPDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4NDL4.7" \
-    G4PARTICLEXSDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4PARTICLEXS4.0" \
-    G4PIIDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4PII1.3" \
-    G4RADIOACTIVEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/RadioactiveDecay5.6" \
-    G4REALSURFACEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/RealSurface2.2" \
-    G4SAIDXSDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4SAIDDATA2.0" \
-    G4TENDLDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4TENDL1.4" \
     AllowForHeavyElements=1
 
 CMD /bin/bash
