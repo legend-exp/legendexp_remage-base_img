@@ -20,3 +20,6 @@ docker build --pull --rm --build-arg CMAKE_BUILD_TYPE="RelWithDebInfo" \
 
 docker build --pull --rm -t gipert/remage-base:latest .
 docker push gipert/remage-base:latest
+
+cd remage
+./build.sh
