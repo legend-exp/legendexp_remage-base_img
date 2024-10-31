@@ -116,8 +116,7 @@ ENV PATH="/opt/geant4/bin:$PATH" \
     G4RADIOACTIVEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/RadioactiveDecay5.6" \
     G4REALSURFACEDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/RealSurface2.2" \
     G4SAIDXSDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4SAIDDATA2.0" \
-    G4TENDLDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4TENDL1.4" \
-    AllowForHeavyElements=1
+    G4TENDLDATA="/opt/geant4/share/Geant4-${GEANT4_VERSION}/data/G4TENDL1.4"
 
 RUN mkdir -p src build /opt/bxdecay0 && \
     git lfs install && \
