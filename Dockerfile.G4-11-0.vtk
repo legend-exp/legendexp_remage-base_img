@@ -138,8 +138,7 @@ ENV PATH="/opt/geant4/bin:$PATH" \
     G4RADIOACTIVEDATA="/opt/geant4/share/Geant4-11.0.0/data/RadioactiveDecay5.6" \
     G4REALSURFACEDATA="/opt/geant4/share/Geant4-11.0.0/data/RealSurface2.2" \
     G4SAIDXSDATA="/opt/geant4/share/Geant4-11.0.0/data/G4SAIDDATA2.0" \
-    G4TENDLDATA="/opt/geant4/share/Geant4-11.0.0/data/G4TENDL1.4" \
-    AllowForHeavyElements=1
+    G4TENDLDATA="/opt/geant4/share/Geant4-11.0.0/data/G4TENDL1.4"
 
 ARG BXDECAY0_VERSION="git"
 

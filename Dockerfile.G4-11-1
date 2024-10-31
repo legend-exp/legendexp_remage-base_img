@@ -102,10 +102,8 @@ RUN mkdir -p src build /opt/geant4 && \
     make -j"$(nproc)" install && \
     cd .. && rm -rf src build
 
-# there's no alternative to setting env vars explicitly
 ENV PATH="/opt/geant4/bin:$PATH" \
-    LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH" \
-    AllowForHeavyElements=1
+    LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH"
 
 RUN mkdir -p src build /opt/bxdecay0 && \
     git lfs install && \
