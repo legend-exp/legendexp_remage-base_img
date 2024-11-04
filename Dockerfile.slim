@@ -46,8 +46,7 @@ RUN mkdir -p src build /opt/geant4 && \
 
 # there's no alternative to setting env vars explicitly
 ENV PATH="/opt/geant4/bin:$PATH" \
-    LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH" \
-    AllowForHeavyElements=1
+    LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH"
 
 CMD /bin/bash
 

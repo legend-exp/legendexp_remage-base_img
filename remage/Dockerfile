@@ -5,7 +5,7 @@ FROM gipert/remage-base:latest
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG REMAGE_VERSION="v0.1.0"
+ARG REMAGE_VERSION="v0.2.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
 USER root
