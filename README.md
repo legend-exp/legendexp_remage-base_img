@@ -9,6 +9,4 @@
 
 Docker containers for development of modern GEANT4-based simulations.
 Pre-built images are available on DockerHub:
-
-- base image: https://hub.docker.com/r/gipert/remage-base
-- including `remage`: https://hub.docker.com/r/gipert/remage
+https://hub.docker.com/r/gipert/remage-base
