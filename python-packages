@@ -4,12 +4,16 @@ exhale
 furo
 hist[plot]
 legend-pydataobj
+legend-pygeom-optics
+legend-pygeom-hpges
+legend-pygeom-tools
 matplotlib
 mplhep
 myst-parser
 numba
 numpy
 pandas
+pyg4ometry
 sphinx
 sphinx-copybutton
 sphinx-inline-tabs
