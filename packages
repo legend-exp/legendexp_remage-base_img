@@ -40,5 +40,8 @@ qtbase5-dev-tools
 valgrind
 vim
 wget
+xfonts-100dpi
+xfonts-75dpi
+xvfb
 zlib1g-dev
 zsh
