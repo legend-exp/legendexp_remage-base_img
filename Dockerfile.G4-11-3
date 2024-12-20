@@ -4,10 +4,13 @@ LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
 ARG ROOT_VERSION="6.28.04"
-ARG VECGEOM_VERSION="1.2.10"
+ARG VECGEOM_VERSION="v1.2.10"
 ARG GEANT4_VERSION="11.3.0"
 ARG BXDECAY0_VERSION="1.1.2"
 ARG CMAKE_BUILD_TYPE="Release"
+
+# experimental feature in Geant4, enable at your own risk
+ARG GEANT4_USE_USOLIDS="OFF"
 
 USER root
 WORKDIR /root
@@ -28,7 +31,7 @@ ENV LC_ALL="en_US.utf8" \
 
 # build and install VecGeom
 RUN mkdir -p src build /opt/vecgeom && \
-    wget -q -O- "https://gitlab.cern.ch/VecGeom/VecGeom/-/archive/v${VECGEOM_VERSION}/VecGeom-v${VECGEOM_VERSION}.tar.gz" \
+    wget -q -O- "https://gitlab.cern.ch/VecGeom/VecGeom/-/archive/${VECGEOM_VERSION}/VecGeom-${VECGEOM_VERSION}.tar.gz" \
         | tar --strip-components 1 -C src --strip=1 -x -z && \
     cd build && \
     cmake \
@@ -93,7 +96,7 @@ RUN mkdir -p src build /opt/geant4 && \
         -DGEANT4_BUILD_MULTITHREADED=ON \
 # libhdf5must be compiled in thread-safe mode, if GEANT4 multithreading is enabled
         -DGEANT4_USE_HDF5=ON \
-        # -DGEANT4_USE_USOLIDS=ON \
+        -DGEANT4_USE_USOLIDS=${GEANT4_USE_USOLIDS} \
         -DGEANT4_USE_QT=ON \
         -DGEANT4_USE_INVENTOR_QT=ON \
         -DGEANT4_USE_OPENGL_X11=ON \
