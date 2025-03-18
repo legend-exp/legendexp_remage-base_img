@@ -1,15 +1,12 @@
 binutils
 cmake
 ca-certificates
-cgdb
 curl
 cython3
-doxygen
 freeglut3-dev
 g++
 gcc
 git-lfs
-graphviz
 ipython3
 libcgal-dev
 libexpat1-dev
@@ -38,7 +35,6 @@ qtbase5-dev
 qtchooser
 qt5-qmake
 qtbase5-dev-tools
-valgrind
 vim
 wget
 xfonts-100dpi

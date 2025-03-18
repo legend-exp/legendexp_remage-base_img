@@ -1,0 +1,8 @@
+latexmk
+texlive-latex-recommended
+texlive-latex-extra
+tex-gyre
+valgrind
+cgdb
+doxygen
+graphviz
