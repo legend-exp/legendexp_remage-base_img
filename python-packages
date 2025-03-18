@@ -13,6 +13,7 @@ myst-parser
 numba
 numpy
 pandas
+pre-commit
 pyg4ometry
 sphinx
 sphinx-copybutton
