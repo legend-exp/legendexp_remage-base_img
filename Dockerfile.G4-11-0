@@ -9,14 +9,16 @@ ARG GEANT4_VERSION="11.0.3"
 ARG BXDECAY0_VERSION="1.1.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
+ARG N_THREADS="8"
+
 USER root
 WORKDIR /root
 
 # configure system
-COPY packages packages
+COPY packages packages.extra .
 RUN apt-get update -qq && \
     ln -sf /usr/share/zoneinfo/UTC /etc/localtime && \
-    DEBIAN_FRONTEND="noninteractive" apt-get -y install $(cat packages{,.extra}) && \
+    DEBIAN_FRONTEND="noninteractive" apt-get -y install $(cat packages packages.extra}) && \
     locale-gen en_US.UTF-8 && update-locale && \
     rm -rf /var/lib/apt/lists/* && \
 # https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
@@ -39,7 +41,7 @@ RUN mkdir -p src build /opt/vecgeom && \
         -DVECGEOM_BUILTIN_VECCORE=ON \
         -Dfail-on-missing=ON \
         ../src && \
-    make -j"$(nproc)" install && \
+    make -j ${N_THREADS} install && \
     cd .. && rm -rf build src
 
 ENV PATH="/opt/vecgeom/bin:$PATH" \
@@ -60,7 +62,7 @@ RUN mkdir -p src build /opt/root && \
         -Dminimal=ON \
         -Dfail-on-missing=ON \
         ../src && \
-    VERBOSE=1 make -j"$(nproc)" install && \
+    VERBOSE=1 make -j ${N_THREADS} install && \
     cd .. && rm -rf build src
 
 # install ROOT binary release
@@ -99,7 +101,7 @@ RUN mkdir -p src build /opt/geant4 && \
         -DGEANT4_USE_OPENGL_X11=ON \
         -DGEANT4_USE_RAYTRACER_X11=ON \
         ../src && \
-    make -j"$(nproc)" install && \
+    make -j ${N_THREADS} install && \
     cd .. && rm -rf src build
 
 # there's no alternative to setting env vars explicitly
@@ -133,7 +135,7 @@ RUN mkdir -p src build /opt/bxdecay0 && \
         -DBXDECAY0_WITH_GEANT4_EXTENSION=ON \
         # -DBXDECAY0_INSTALL_DBD_GA_DATA=ON \
         ../src && \
-    make -j"$(nproc)" install && \
+    make -j ${N_THREADS} install && \
     rm -rf build src
 
 ENV PATH="/opt/bxdecay0/bin:$PATH" \

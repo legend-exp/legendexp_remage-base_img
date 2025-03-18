@@ -6,14 +6,16 @@ LABEL maintainer.email="gipert@pm.me"
 ARG GEANT4_VERSION="11.1.2"
 ARG CMAKE_BUILD_TYPE="Release"
 
+ARG N_THREADS="8"
+
 USER root
 WORKDIR /root
 
 # configure system
-COPY packages packages
+COPY packages packages.extra .
 RUN apt-get update -qq && \
     ln -sf /usr/share/zoneinfo/UTC /etc/localtime && \
-    apt-get -y install $(cat packages{,.extra}) && \
+    apt-get -y install $(cat packages packages.extra) && \
     locale-gen en_US.UTF-8 && update-locale && \
     rm -rf /var/lib/apt/lists/* && \
 # https://askubuntu.com/questions/1034313/ubuntu-18-4-libqt5core-so-5-cannot-open-shared-object-file-no-such-file-or-dir
@@ -41,7 +43,7 @@ RUN mkdir -p src build /opt/geant4 && \
         -DGEANT4_USE_SYSTEM_CLHEP=OFF \
         -DGEANT4_BUILD_MULTITHREADED=ON \
         ../src && \
-    make -j"$(nproc)" install && \
+    make -j ${N_THREADS} install && \
     cd .. && rm -rf src build
 
 # there's no alternative to setting env vars explicitly
