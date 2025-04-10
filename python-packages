@@ -3,6 +3,7 @@ breathe
 exhale
 furo
 hist[plot]
+ipykernel
 legend-pydataobj
 legend-pygeom-optics
 legend-pygeom-hpges
@@ -18,4 +19,5 @@ pyg4ometry
 sphinx
 sphinx-copybutton
 sphinx-inline-tabs
+sphinx-subfigure
 sphinx-togglebutton
