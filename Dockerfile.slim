@@ -50,6 +50,16 @@ RUN mkdir -p src build /opt/geant4 && \
 ENV PATH="/opt/geant4/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH"
 
+COPY python-packages python-packages
+RUN pip install --no-cache-dir uv && \
+    uv venv /opt/python-extra && \
+    . /opt/python-extra/bin/activate && \
+    uv pip install --no-cache $(cat python-packages)
+
+# this should be enough to load the virtual environment
+ENV PATH="/opt/python-extra/bin:$PATH" \
+    VIRTUAL_ENV=/opt/python-extra
+
 CMD /bin/bash
 
 # vim: ft=dockerfile

@@ -132,10 +132,10 @@ ENV PATH="/opt/bxdecay0/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/bxdecay0/lib:$LD_LIBRARY_PATH"
 
 COPY python-packages python-packages
-RUN pip install uv && \
+RUN pip install --no-cache-dir uv && \
     uv venv /opt/python-extra && \
     . /opt/python-extra/bin/activate && \
-    uv pip install $(cat python-packages)
+    uv pip install --no-cache $(cat python-packages)
 
 # this should be enough to load the virtual environment?
 ENV PATH="/opt/python-extra/bin:$PATH" \
