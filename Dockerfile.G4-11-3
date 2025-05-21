@@ -1,9 +1,9 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.28.04"
+ARG ROOT_VERSION="6.34.08"
 ARG VECGEOM_VERSION="v1.2.10"
 ARG GEANT4_VERSION="11.3.1"
 ARG BXDECAY0_VERSION="1.1.2"
@@ -132,10 +132,10 @@ ENV PATH="/opt/bxdecay0/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/bxdecay0/lib:$LD_LIBRARY_PATH"
 
 COPY python-packages python-packages
-RUN pip install --no-cache-dir uv && \
-    uv venv /opt/python-extra && \
-    . /opt/python-extra/bin/activate && \
-    uv pip install --no-cache $(cat python-packages)
+RUN python -m venv /opt/python-extra && \
+    /opt/python-extra/bin/python -m pip install --no-cache-dir --no-warn-script-location --upgrade pip && \
+    /opt/python-extra/bin/python -m pip install --no-cache-dir --no-warn-script-location --upgrade uv && \
+    /opt/python-extra/bin/python -m uv pip install --no-cache $(cat python-packages)
 
 # this should be enough to load the virtual environment
 ENV PATH="/opt/python-extra/bin:$PATH" \
