@@ -35,7 +35,7 @@ RUN mkdir -p src build /opt/vecgeom && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/vecgeom" \
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGDML=ON \
         -Dfail-on-missing=ON \
@@ -54,7 +54,7 @@ RUN mkdir -p src build /opt/root && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/root" \
 # ROOT is bad software: https://root.cern/install/build_from_source/#caveats
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -Dbuiltin_veccore=OFF \
         -Dminimal=ON \
@@ -104,7 +104,7 @@ RUN mkdir -p src build /opt/geant4 && \
         --fail-on-missing \
         --enable-shared \
         --enable-soversion \
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DGEANT4_USE_GDML=ON \
         -DGEANT4_INSTALL_DATA=ON \
@@ -154,7 +154,7 @@ RUN mkdir -p src build /opt/bxdecay0 && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/bxdecay0" \
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
         -DBXDECAY0_WITH_GEANT4_EXTENSION=ON \
         # -DBXDECAY0_INSTALL_DBD_GA_DATA=ON \
