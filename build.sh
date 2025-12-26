@@ -3,7 +3,7 @@
 export BUILDKIT_STEP_LOG_MAX_SIZE=1073741824  # 1 GB
 n_threads=30
 
-for flavor in {G4-11-3,latest,G4-11-2,stable,slim}; do
+for flavor in {G4-11-4,latest,G4-11-3,stable,slim}; do
     docker_tag=$(echo $flavor | sed 's|-|.|g')
     docker build \
         --progress plain \
@@ -16,7 +16,7 @@ for flavor in {G4-11-3,latest,G4-11-2,stable,slim}; do
 done
 
 # special images, produced only for latest version
-flavor="G4-11-3"
+flavor="G4-11-4"
 docker_tag=$(echo $flavor | sed 's|-|.|g')
 
 docker build \
