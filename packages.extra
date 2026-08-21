@@ -6,3 +6,4 @@ valgrind
 cgdb
 doxygen
 graphviz
+clang-tidy
