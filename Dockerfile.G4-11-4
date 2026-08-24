@@ -78,9 +78,9 @@ ENV ROOTSYS="/opt/root" \
     PYTHONPATH="/opt/root/lib:$PYTHONPATH"
 
 # build and install GEANT4
-RUN mkdir -p src build /opt/geant4 && \
+RUN mkdir -p build /opt/geant4/src && \
     wget -q -O- "https://cern.ch/geant4-data/releases/geant4-v${GEANT4_VERSION}.tar.gz" \
-        | tar --strip-components 1 -C src --strip=1 -x -z && \
+        | tar --strip-components 1 -C /opt/geant4/src --strip=1 -x -z && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX="/opt/geant4" \
@@ -102,9 +102,11 @@ RUN mkdir -p src build /opt/geant4 && \
         -DGEANT4_USE_INVENTOR_QT=ON \
         -DGEANT4_USE_OPENGL_X11=ON \
         -DGEANT4_USE_RAYTRACER_X11=ON \
-        ../src && \
+        /opt/geant4/src && \
     make -j ${N_THREADS} install && \
-    cd .. && rm -rf src build
+    cd .. && rm -rf build && \
+# keep the sources around in debug builds, for source-level debugging
+    case "${CMAKE_BUILD_TYPE}" in Debug|RelWithDebInfo) ;; *) rm -rf /opt/geant4/src ;; esac
 
 ENV PATH="/opt/geant4/bin:$PATH" \
     LD_LIBRARY_PATH="/opt/geant4/lib:$LD_LIBRARY_PATH"
