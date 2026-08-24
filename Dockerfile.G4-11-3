@@ -4,7 +4,6 @@ LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
 ARG ROOT_VERSION="6.36.14"
-ARG VECGEOM_VERSION="v1.2.10"
 ARG GEANT4_VERSION="11.3.2"
 ARG BXDECAY0_VERSION="1.2.0"
 ARG CMAKE_BUILD_TYPE="Release"
@@ -30,25 +29,6 @@ RUN apt-get update -qq && \
 ENV LC_ALL="en_US.utf8" \
     LANGUAGE="en_US.utf8" \
     LANG="en_US.utf8"
-
-# build and install VecGeom
-RUN mkdir -p src build /opt/vecgeom && \
-    wget -q -O- "https://gitlab.cern.ch/VecGeom/VecGeom/-/archive/${VECGEOM_VERSION}/VecGeom-${VECGEOM_VERSION}.tar.gz" \
-        | tar --strip-components 1 -C src --strip=1 -x -z && \
-    cd build && \
-    cmake \
-        -DCMAKE_INSTALL_PREFIX="/opt/vecgeom" \
-        -DCMAKE_CXX_STANDARD=20 \
-        -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" \
-        -DVECGEOM_GDML=ON \
-        -DVECGEOM_BUILTIN_VECCORE=ON \
-        -Dfail-on-missing=ON \
-        ../src && \
-    make -j ${N_THREADS} install && \
-    cd .. && rm -rf build src
-
-ENV PATH="/opt/vecgeom/bin:$PATH" \
-    LD_LIBRARY_PATH="/opt/vecgeom/lib:$LD_LIBRARY_PATH"
 
 # build install ROOT
 RUN mkdir -p src build /opt/root && \
