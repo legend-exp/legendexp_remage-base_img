@@ -6,7 +6,7 @@ LABEL maintainer.email="gipert@pm.me"
 ARG ROOT_VERSION="6.34.08"
 ARG VECGEOM_VERSION="v1.2.10"
 ARG GEANT4_VERSION="11.3.2"
-ARG BXDECAY0_VERSION="1.1.2"
+ARG BXDECAY0_VERSION="1.2.0"
 ARG CMAKE_BUILD_TYPE="Release"
 
 # experimental feature in Geant4, enable at your own risk
