@@ -60,6 +60,6 @@ RUN python -m venv /opt/python-extra && \
 ENV PATH="/opt/python-extra/bin:$PATH" \
     VIRTUAL_ENV=/opt/python-extra
 
-CMD /bin/bash
+CMD ["/bin/bash"]
 
 # vim: ft=dockerfile
