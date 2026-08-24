@@ -3,7 +3,7 @@ FROM ubuntu:resolute
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG ROOT_VERSION="6.34.08"
+ARG ROOT_VERSION="6.36.14"
 ARG VECGEOM_VERSION="v2.0.0"
 ARG GEANT4_VERSION="11.4.2"
 ARG BXDECAY0_VERSION="1.2.0"
