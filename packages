@@ -17,7 +17,7 @@ liblzma-dev
 libmotif-dev
 libocct-data-exchange-dev
 libopengl-dev
-libpcre3-dev
+libpcre2-dev
 libsoqt520-dev
 libxerces-c-dev
 libxi-dev
