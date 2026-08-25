@@ -1,9 +1,9 @@
-FROM ubuntu:noble
+FROM ubuntu:resolute
 
 LABEL maintainer.name="Luigi Pertoldi"
 LABEL maintainer.email="gipert@pm.me"
 
-ARG GEANT4_VERSION="11.2.2"
+ARG GEANT4_VERSION="11.3.2"
 ARG CMAKE_BUILD_TYPE="Release"
 
 ARG N_THREADS="8"
@@ -60,6 +60,6 @@ RUN python -m venv /opt/python-extra && \
 ENV PATH="/opt/python-extra/bin:$PATH" \
     VIRTUAL_ENV=/opt/python-extra
 
-CMD /bin/bash
+CMD ["/bin/bash"]
 
 # vim: ft=dockerfile
