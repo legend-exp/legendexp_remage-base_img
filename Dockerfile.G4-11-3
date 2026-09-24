@@ -8,9 +8,6 @@ ARG GEANT4_VERSION="11.3.2"
 ARG BXDECAY0_VERSION="1.2.1"
 ARG CMAKE_BUILD_TYPE="Release"
 
-# experimental feature in Geant4, enable at your own risk
-ARG GEANT4_USE_USOLIDS="OFF"
-
 ARG N_THREADS="8"
 
 USER root
@@ -78,7 +75,6 @@ RUN mkdir -p build /opt/geant4/src && \
         -DGEANT4_BUILD_MULTITHREADED=ON \
 # libhdf5must be compiled in thread-safe mode, if GEANT4 multithreading is enabled
         -DGEANT4_USE_HDF5=ON \
-        -DGEANT4_USE_USOLIDS=${GEANT4_USE_USOLIDS} \
         -DGEANT4_USE_QT=ON \
         -DGEANT4_USE_INVENTOR_QT=ON \
         -DGEANT4_USE_OPENGL_X11=ON \
